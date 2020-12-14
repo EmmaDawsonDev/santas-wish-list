@@ -1,44 +1,47 @@
 <template>
-  <div class="wrapper">
-    <div class="list">
-      <h1>Dear Santa,</h1>
-      <h3>This year I have been very good. Here is my wish list:</h3>
-      <input
-        type="text"
-        name="wishlistItem"
-        placeholder="Write your wish here"
-        v-model="wishlistItem"
-        @keyup.enter="addToWishList"
-      />
-      <button class="add-item-btn" @click="addToWishList">Add item</button>
-      <section class="list-items">
-        <wish-list-item
-          v-for="(item, index) in wishList"
-          :key="index"
-          :id="index"
-          :listItem="item"
-          @deleteItem="removeFromList(index)"
-        ></wish-list-item>
-      </section>
+  <div class="container">
+    <div class="wrapper hidden">
+      <div class="list">
+        <h1>Dear Santa,</h1>
+        <h3>This year I have been very good. Here is my wish list:</h3>
+        <input
+          type="text"
+          name="wishlistItem"
+          placeholder="Write your wish here"
+          v-model="wishlistItem"
+          @keyup.enter="addToWishList"
+        />
+        <button class="add-item-btn" @click="addToWishList">Add item</button>
+        <section class="list-items">
+          <wish-list-item
+            v-for="(item, index) in wishList"
+            :key="index"
+            :id="index"
+            :listItem="item"
+            @deleteItem="removeFromList(index)"
+          ></wish-list-item>
+        </section>
+      </div>
+      <div class="send">
+        <h3>Merry Christmas! Love from...</h3>
+        <input
+          type="text"
+          name="name"
+          v-model="name"
+          placeholder="Write your name"
+        />
+        <button class="send-btn">
+          send to santa
+        </button>
+      </div>
     </div>
-    <div class="send">
-      <h3>Merry Christmas! Love from...</h3>
-      <input
-        type="text"
-        name="name"
-        v-model="name"
-        placeholder="Write your name"
-      />
-      <button class="send-btn">
-        send to santa
-      </button>
-    </div>
+    <the-letter></the-letter>
   </div>
 </template>
 
 <script>
 import WishListItem from "./components/WishListItem.vue";
-
+import TheLetter from "./components/TheLetter.vue";
 export default {
   data() {
     return {
@@ -49,6 +52,7 @@ export default {
   },
   components: {
     WishListItem,
+    TheLetter,
   },
   methods: {
     addToWishList() {
@@ -153,5 +157,9 @@ button:hover {
 .list-items {
   height: 100%;
   overflow-x: hidden;
+}
+
+.hidden {
+  display: none;
 }
 </style>
