@@ -21,6 +21,18 @@
         ></wish-list-item>
       </section>
     </div>
+    <div class="send">
+      <h3>Merry Christmas! Love from...</h3>
+      <input
+        type="text"
+        name="name"
+        v-model="name"
+        placeholder="Write your name"
+      />
+      <button class="send-btn">
+        send to santa
+      </button>
+    </div>
   </div>
 </template>
 
@@ -32,6 +44,7 @@ export default {
     return {
       wishlistItem: "",
       wishList: [],
+      name: "",
     };
   },
   components: {
@@ -82,6 +95,14 @@ html {
   flex-direction: column;
 }
 
+.send {
+  width: 60%;
+  margin-top: 4rem;
+  margin-left: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
 h1 {
   font-size: 3rem;
 }
@@ -113,24 +134,20 @@ button {
   background-color: rgb(146, 19, 19);
   color: white;
   padding: 0.4rem 0.7rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   border-radius: 10px;
   border: none;
   cursor: pointer;
   font-family: "Gochi Hand", cursive;
-  font-size: 1.4rem;
   letter-spacing: 1.2px;
   text-transform: uppercase;
+  display: flex;
+  align-self: flex-end;
+  margin-top: 0.2rem;
 }
 
 button:hover {
   background-color: rgb(98, 20, 20);
-}
-
-.add-item-btn {
-  display: flex;
-  align-self: flex-end;
-  margin-top: 1rem;
 }
 
 .list-items {
