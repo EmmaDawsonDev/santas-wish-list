@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="wrapper hidden">
+    <div class="wrapper" :class="hiddenWrapper">
       <div class="list">
         <h1>Dear Santa,</h1>
         <h3>This year I have been very good. Here is my wish list:</h3>
@@ -23,19 +23,23 @@
         </section>
       </div>
       <div class="send">
-        <h3>Merry Christmas! Love from...</h3>
+        <h3>Merry Christmas! Love from</h3>
         <input
           type="text"
           name="name"
           v-model="name"
           placeholder="Write your name"
         />
-        <button class="send-btn">
+        <button class="send-btn" @click="hideComponent">
           send to santa
         </button>
       </div>
     </div>
-    <the-letter></the-letter>
+    <the-letter
+      :class="hiddenLetter"
+      :submittedName="name"
+      @show-homepage="showComponent"
+    ></the-letter>
   </div>
 </template>
 
@@ -48,6 +52,8 @@ export default {
       wishlistItem: "",
       wishList: [],
       name: "",
+      hiddenWrapper: "",
+      hiddenLetter: "hidden",
     };
   },
   components: {
@@ -61,6 +67,14 @@ export default {
     },
     removeFromList(id) {
       this.wishList.splice(id, 1);
+    },
+    hideComponent() {
+      this.hiddenWrapper = "hidden";
+      this.hiddenLetter = "";
+    },
+    showComponent() {
+      this.hiddenWrapper = "";
+      this.hiddenLetter = "hidden";
     },
   },
 };
@@ -131,7 +145,8 @@ input::placeholder {
 }
 
 input:focus {
-  outline: 2px solid rgb(146, 19, 19);
+  background-color: rgb(146, 19, 19, 0.2);
+  outline: 1px solid rgb(146, 19, 19, 0.3);
 }
 
 button {
@@ -161,5 +176,45 @@ button:hover {
 
 .hidden {
   display: none;
+}
+
+@media (max-width: 450px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  .send {
+    margin-top: 3.2rem;
+  }
+  .send input {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 374px) {
+  .send {
+    margin-top: 1.7rem;
+  }
+
+  input {
+    font-size: 1.3rem;
+    margin-top: 0.5rem;
+  }
+
+  button {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    display: flex;
+    align-self: flex-end;
+    margin-top: 0.2rem;
+  }
 }
 </style>

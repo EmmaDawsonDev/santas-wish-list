@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper2">
+    <button @click="showHomePage" class="home-btn">Home</button>
     <img src="../../public/images/letter.png" alt="envelope image" />
     <section class="address">
       <p>To Santa,</p>
@@ -7,13 +8,22 @@
       <p>The North Pole</p>
     </section>
     <section class="name">
-      <p>Love name</p>
+      <p>Love {{ submittedName }}</p>
     </section>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    submittedName: String,
+  },
+  methods: {
+    showHomePage() {
+      this.$emit("show-homepage");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -56,6 +66,12 @@ p {
 
 .name p {
   font-size: 2.5rem;
+}
+
+.home-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 @media (max-width: 1300px) {
@@ -110,5 +126,9 @@ p {
   .name {
     margin-top: 55%;
   }
+}
+
+.hidden {
+  display: none;
 }
 </style>
