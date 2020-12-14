@@ -2,7 +2,9 @@
   <div class="container">
     <div class="wrapper" :class="hiddenWrapper">
       <div class="list">
-        <h1>Dear Santa,</h1>
+        <h1>
+          Dear Santa,
+        </h1>
         <h3>This year I have been very good. Here is my wish list:</h3>
         <input
           type="text"
@@ -30,9 +32,14 @@
           v-model="name"
           placeholder="Write your name"
         />
-        <button class="send-btn" @click="hideComponent">
-          send to santa
-        </button>
+        <div class="flex">
+          <button class="reset-btn" @click="resetComponent">
+            reset
+          </button>
+          <button class="send-btn" @click="hideComponent">
+            send to santa
+          </button>
+        </div>
       </div>
     </div>
     <the-letter
@@ -75,6 +82,10 @@ export default {
     showComponent() {
       this.hiddenWrapper = "";
       this.hiddenLetter = "hidden";
+    },
+    resetComponent() {
+      this.name = "";
+      this.wishList = [];
     },
   },
 };
@@ -165,8 +176,26 @@ button {
   margin-top: 0.2rem;
 }
 
+.flex {
+  display: flex;
+  align-self: flex-end;
+}
+
+.reset-btn {
+  background-color: transparent;
+  color: rgb(146, 19, 19);
+}
+
 button:hover {
   background-color: rgb(98, 20, 20);
+}
+.reset-btn:hover {
+  background-color: rgb(255, 255, 255, 0.8);
+  color: rgb(146, 19, 19);
+}
+
+button:focus {
+  outline: 1px solid rgb(146, 19, 19);
 }
 
 .list-items {
