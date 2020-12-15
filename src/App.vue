@@ -1,52 +1,56 @@
 <template>
   <div class="container">
-    <div class="wrapper" :class="hiddenWrapper">
-      <div class="list">
-        <h1>
-          Dear Santa,
-        </h1>
-        <h3>This year I have been very good. Here is my wish list:</h3>
-        <input
-          type="text"
-          name="wishlistItem"
-          placeholder="Write your wish here"
-          v-model="wishlistItem"
-          @keyup.enter="addToWishList"
-        />
-        <button class="add-item-btn" @click="addToWishList">Add item</button>
-        <section class="list-items">
-          <wish-list-item
-            v-for="(item, index) in wishList"
-            :key="index"
-            :id="index"
-            :listItem="item"
-            @deleteItem="removeFromList(index)"
-          ></wish-list-item>
-        </section>
-      </div>
-      <div class="send">
-        <h3>Merry Christmas! Love from</h3>
-        <input
-          type="text"
-          name="name"
-          v-model="name"
-          placeholder="Write your name"
-        />
-        <div class="flex">
-          <button class="reset-btn" @click="resetComponent">
-            reset
-          </button>
-          <button class="send-btn" @click="hideComponent">
-            send to santa
-          </button>
+    <transition name="fade">
+      <div class="wrapper" v-if="visible">
+        <div class="list">
+          <h1>
+            Dear Santa,
+          </h1>
+          <h3>This year I have been very good. Here is my wish list:</h3>
+          <input
+            type="text"
+            name="wishlistItem"
+            placeholder="Write your wish here"
+            v-model="wishlistItem"
+            @keyup.enter="addToWishList"
+          />
+          <button class="add-item-btn" @click="addToWishList">Add item</button>
+          <section class="list-items">
+            <wish-list-item
+              v-for="(item, index) in wishList"
+              :key="index"
+              :id="index"
+              :listItem="item"
+              @deleteItem="removeFromList(index)"
+            ></wish-list-item>
+          </section>
+        </div>
+        <div class="send">
+          <h3>Merry Christmas! Love from</h3>
+          <input
+            type="text"
+            name="name"
+            v-model="name"
+            placeholder="Write your name"
+          />
+          <div class="flex">
+            <button class="reset-btn" @click="resetComponent">
+              reset
+            </button>
+            <button class="send-btn" @click="hideComponent">
+              send to santa
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <the-letter
-      :class="hiddenLetter"
-      :submittedName="name"
-      @show-homepage="showComponent"
-    ></the-letter>
+    </transition>
+    <transition name="fade-spin">
+      <the-letter
+        v-if="show"
+        :submittedName="name"
+        @show-homepage="hideComponent"
+      ></the-letter>
+    </transition>
   </div>
 </template>
 
@@ -59,8 +63,9 @@ export default {
       wishlistItem: "",
       wishList: [],
       name: "",
-      hiddenWrapper: "",
-      hiddenLetter: "hidden",
+      visible: true,
+      //hiddenLetter: "hidden",
+      show: false,
     };
   },
   components: {
@@ -76,13 +81,10 @@ export default {
       this.wishList.splice(id, 1);
     },
     hideComponent() {
-      this.hiddenWrapper = "hidden";
-      this.hiddenLetter = "";
+      this.visible = !this.visible;
+      this.show = !this.show;
     },
-    showComponent() {
-      this.hiddenWrapper = "";
-      this.hiddenLetter = "hidden";
-    },
+
     resetComponent() {
       this.name = "";
       this.wishList = [];
@@ -205,6 +207,23 @@ button:focus {
 
 .hidden {
   display: none;
+}
+
+.fade-enter-active {
+  transition: opacity 2s;
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-spin-enter-active {
+  transition: all 2s ease-in-out;
+}
+
+.fade-spin-enter-from {
+  opacity: 0;
+  transform: scale(0) rotate(3turn);
 }
 
 @media (max-width: 450px) {
